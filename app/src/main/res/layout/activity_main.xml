@@ -10,6 +10,7 @@
     <EditText
         android:id="@+id/editText"
         android:layout_width="0dp"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/btn"
         app:layout_constraintEnd_toEndOf="@+id/btn"
@@ -19,7 +20,7 @@
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to Second Activity"
+        android:text="Open Dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
