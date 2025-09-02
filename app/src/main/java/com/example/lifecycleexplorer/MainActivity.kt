@@ -1,6 +1,5 @@
 package com.example.lifecycleexplorer
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setText("Fragment B"))
 
         addFragment(FragmentA())
+//        addFragmentWithBackstack(FragmentA(),"Fragment_A")
+        //replaceFragment(FragmentA())
+//        replaceFragmentWithBackStack(FragmentA(), "Fragment_A")
 
         // Handle tab selection
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -42,16 +44,29 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    private fun addFragment(fragment: FragmentA) {
+    private fun addFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .add(R.id.fragmentContainer, fragment)
+            .commit()
+    }
+
+    private fun addFragmentWithBackstack(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainer, fragment,tag)
+            .addToBackStack(tag)
             .commit()
     }
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
+            .commit()
+    }
+
+    private fun replaceFragmentWithBackStack(fragment: Fragment,tag:String) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment,tag)
+            .addToBackStack(tag)
             .commit()
     }
 }
