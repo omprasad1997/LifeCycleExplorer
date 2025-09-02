@@ -1,81 +1,57 @@
 package com.example.lifecycleexplorer
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.lifecycleexplorer.LifecycleLogger.TAG
+import androidx.fragment.app.Fragment
 import com.example.lifecycleexplorer.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
     lateinit var _binding : ActivityMainBinding
-
+    val binding get() = _binding
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(_binding.root)
-        LifecycleLogger.log(TAG, "MainActivity onCreate")
 
-        _binding.btn.setOnClickListener {
-            val intent = Intent(this, SecondActivity::class.java)
-            startActivity(intent)
-        }
+        tabLayout = binding.tabLayout
+
+        // Add tabs
+        tabLayout.addTab(tabLayout.newTab().setText("Fragment A"))
+        tabLayout.addTab(tabLayout.newTab().setText("Fragment B"))
+
+        addFragment(FragmentA())
+
+        // Handle tab selection
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> replaceFragment(FragmentA())
+                    1 -> replaceFragment(FragmentB())
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
     }
 
-//    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-//        super.onSaveInstanceState(outState, outPersistentState)
-//        LifecycleLogger.log(TAG, "MainActivity onSaveInstanceState")
-//
-//        outState.putString("key_text", _binding.editText.text.toString())
-//    }
 
-//    override fun onRestoreInstanceState(
-//        savedInstanceState: Bundle?,
-//        persistentState: PersistableBundle?
-//    ) {
-//        super.onRestoreInstanceState(savedInstanceState, persistentState)
-//        LifecycleLogger.log(TAG, "MainActivity onRestoreInstanceState")
-//        val text = savedInstanceState?.getString("key_text")
-//        _binding.editText.setText(text)
-//    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        LifecycleLogger.log(TAG, "MainActivity onConfigurationChanged")
+    private fun addFragment(fragment: FragmentA) {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainer, fragment)
+            .commit()
     }
 
-    override fun onStart() {
-        super.onStart()
-        LifecycleLogger.log(TAG, "MainActivity onStart")
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
-
-    override fun onResume() {
-        super.onResume()
-        LifecycleLogger.log(TAG, "MainActivity onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        LifecycleLogger.log(TAG, "MainActivity onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        LifecycleLogger.log(TAG, "MainActivity onStop")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        LifecycleLogger.log(TAG, "MainActivity onRestart")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        LifecycleLogger.log(TAG, "MainActivity onDestroy")
-    }
-
 }
