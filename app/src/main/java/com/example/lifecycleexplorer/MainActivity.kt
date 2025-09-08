@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(_binding.root)
-        //LifecycleLogger.log(TAG, "MainActivity onCreate")
+        LifecycleLogger.log(TAG, "MainActivity onCreate")
 
         binding.btn.setOnClickListener {
             val dialogFragment = DialogFragment()
@@ -27,4 +27,33 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onStart() {
+        super.onStart()
+        LifecycleLogger.log(TAG, "MainActivity onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LifecycleLogger.log(TAG, "MainActivity onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LifecycleLogger.log(TAG, "MainActivity onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LifecycleLogger.log(TAG, "MainActivity onStop")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        LifecycleLogger.log(TAG, "MainActivity onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LifecycleLogger.log(TAG, "MainActivity onDestroy")
+    }
 }

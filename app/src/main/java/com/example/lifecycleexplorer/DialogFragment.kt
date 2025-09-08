@@ -1,5 +1,6 @@
 package com.example.lifecycleexplorer
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,11 @@ import androidx.fragment.app.DialogFragment
 import com.example.lifecycleexplorer.LifecycleLogger.TAG
 
 class DialogFragment : DialogFragment() {
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        LifecycleLogger.log(TAG, "DialogFragment onAttach")
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LifecycleLogger.log(TAG, "DialogFragment onCreate")
@@ -18,6 +24,11 @@ class DialogFragment : DialogFragment() {
     ): View? {
         LifecycleLogger.log(TAG, "DialogFragment onCreateView")
         return inflater.inflate(R.layout.dialog_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        LifecycleLogger.log(TAG, "DialogFragment onViewCreated")
     }
 
     override fun onStart() {
