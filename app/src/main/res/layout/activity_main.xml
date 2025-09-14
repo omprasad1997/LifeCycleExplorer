@@ -20,10 +20,11 @@
         app:tabSelectedTextColor="@android:color/holo_blue_dark"
         app:tabTextColor="@android:color/darker_gray" />
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:name="com.example.lifecycleexplorer.FragmentA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabLayout" />
     <EditText
